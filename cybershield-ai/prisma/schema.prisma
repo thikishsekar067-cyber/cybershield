@@ -1,0 +1,19 @@
+datasource db { provider = "mysql" url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+model User { id String @id @default(cuid()) email String @unique passwordHash String? createdAt DateTime @default(now()) analyses Analysis[] attempts QuizAttempt[] achievements UserAchievement[] }
+model Analysis { id String @id @default(cuid()) userId String? type String riskScore Int riskLevel String summary String createdAt DateTime @default(now()) user User? @relation(fields:[userId],references:[id],onDelete:SetNull) }
+model AnalysisResult { id String @id @default(cuid()) analysisId String indicators Json explanation String recommendedActions Json analysis Analysis @relation(fields:[analysisId],references:[id],onDelete:Cascade) }
+model Quiz { id String @id @default(cuid()) title String category String questions Question[] }
+model Question { id String @id @default(cuid()) quizId String text String options Json correctIndex Int explanation String quiz Quiz @relation(fields:[quizId],references:[id],onDelete:Cascade) }
+model QuizAttempt { id String @id @default(cuid()) userId String score Int total Int createdAt DateTime @default(now()) user User @relation(fields:[userId],references:[id],onDelete:Cascade) }
+model Achievement { id String @id @default(cuid()) name String description String points Int users UserAchievement[] }
+model UserAchievement { userId String achievementId String earnedAt DateTime @default(now()) user User @relation(fields:[userId],references:[id],onDelete:Cascade) achievement Achievement @relation(fields:[achievementId],references:[id],onDelete:Cascade) @@id([userId,achievementId]) }
+model Article { id String @id @default(cuid()) slug String @unique title String summary String body String published Boolean @default(false) createdAt DateTime @default(now()) }
+model CyberAlert { id String @id @default(cuid()) title String category String summary String sourceUrl String publishedAt DateTime? }
+model MythFact { id String @id @default(cuid()) myth String fact String }
+model Helpline { id String @id @default(cuid()) name String number String purpose String officialUrl String }
+model GovernmentResource { id String @id @default(cuid()) title String description String officialUrl String }
+model OfficialLink { id String @id @default(cuid()) name String url String purpose String }
+model Reward { id String @id @default(cuid()) name String points Int description String }
+model Admin { id String @id @default(cuid()) email String @unique passwordHash String createdAt DateTime @default(now()) }
+model AuditLog { id String @id @default(cuid()) adminId String? action String metadata Json? createdAt DateTime @default(now()) }

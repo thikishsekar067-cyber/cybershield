@@ -1,0 +1,5 @@
+import './globals.css';
+import { ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+export const metadata={title:'Cyber Shield AI | Think Before You Click',description:'AI-assisted phishing detection, cyber awareness and citizen safety for India.'};
+export default function Layout({children}:{children:React.ReactNode}){return <><header className="nav"><div className="container navin"><Link className="brand" href="/"><ShieldCheck size={22}/> CyberShield AI</Link><nav className="navlinks"><Link href="/detect">Detect</Link><Link href="/learn">Learn</Link><Link href="/quiz">Quiz</Link><Link href="/cyber-help">Cyber Help</Link><Link href="/alerts">Alerts</Link><Link href="/resources">Resources</Link></nav><Link className="btn primary" href="/detect">Check Now</Link></div></header>{children}<footer className="footer"><div className="container"><b>CyberShield AI</b><p>Built for cyber awareness and digital safety.</p><div className="muted">Automated analysis is advisory and does not guarantee safety. Verify important information through official sources.</div></div></footer></>}

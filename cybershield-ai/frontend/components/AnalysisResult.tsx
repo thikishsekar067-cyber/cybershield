@@ -1,0 +1,4 @@
+'use client';
+import { AlertTriangle,CheckCircle2,ShieldAlert } from 'lucide-react';
+import { Analysis } from '../lib/api';
+export default function AnalysisResult({data}:{data:Analysis}){const high=data.riskLevel==='HIGH',med=data.riskLevel==='MEDIUM';return <div className={`result ${high?'risk-high':med?'risk-medium':'risk-low'}`}><div className="pill">{data.confidence} CONFIDENCE</div><h2>{high?'🔴':med?'🟡':'🟢'} {data.riskLevel} RISK</h2><div className="score">{data.riskScore}<span style={{fontSize:18}}>/100</span></div><p><b>{data.classification.replaceAll('_',' ')}</b> — {data.summary}</p><h3>Why?</h3><ul>{data.indicators.map((x,i)=><li key={i}>{x}</li>)}</ul><p>{data.explanation}</p><h3>Recommended action</h3><ul>{data.recommendedActions.map((x,i)=><li key={i}>{x}</li>)}</ul><div className="notice">AI analysis is advisory and may contain errors. Never enter passwords, OTPs, UPI PINs, card PINs or banking credentials into this tool.</div></div>}
